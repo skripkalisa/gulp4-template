@@ -32,7 +32,7 @@ const scssPath = 'styles/scss'
 const pugPath = 'pug'
 const imgPath = 'static/img/**/*.*'
 const fontsPath = 'static/fonts/**/*.*'
-const srcPath = '.'
+// const srcPath = '.'
 const destPath = 'dist'
 
 // styles
@@ -77,8 +77,6 @@ function coffee() {
   return src(`${coffeePath}/*.coffee`)
     .pipe(plumber())
     .pipe(cscript({ bare: false }))
-    .pipe(concat('coffee.js'))
-    .pipe(dest(jsPath))
 }
 function ts() {
   return src(`${tsPath}/*.ts`)
@@ -95,8 +93,6 @@ function ts() {
 function scripts() {
   return src(`${scriptsPath}/*.js`)
     .pipe(plumber())
-    .pipe(eslint())
-    .pipe(eslint.format())
     .pipe(sourcemaps.init())
     .pipe(
       babel({
@@ -133,7 +129,7 @@ function images() {
   return src(imgPath)
     .pipe(
       imagemin([
-        imagemin.gifsicle({ interlaced: true }),
+        //imagemin.gifsicle({ interlaced: true }), - out of order
         imagemin.mozjpeg({
           quality: 75,
           progressive: true,
@@ -149,9 +145,8 @@ function images() {
 
 // fonts
 function fonts() {
-  return gulp.src(fontsPath).pipe(gulp.dest(`${destPath}/fonts`))
+  return src(fontsPath).pipe(dest(`${destPath}/fonts`))
 }
-// TODO destPath
 
 // Watch for changes
 function watchSrc() {
@@ -185,8 +180,8 @@ function reload(done) {
 
 // exports.styl = styl
 // exports.pages = pages
+// exports.jss = scripts
 exports.jsPlus = parallel(es6, coffee, ts)
-exports.jss = scripts
 exports.js = series(exports.jsPlus, scripts)
 exports.build = parallel(exports.js, styl, scss, pages, images, fonts)
 exports.watch = parallel(serve, watchSrc)
