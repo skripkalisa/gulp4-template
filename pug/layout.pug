@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(href="/css/app.css" rel="stylesheet")
+    //link(href="/css/style.css" rel="stylesheet")
+    //link(href="/css/sass.css" rel="stylesheet")
+    title Stylus Tutorials
+  body
+    block header
+      include parts/header
+    block content
+    block footer
+      include parts/footer
+    block scripts
+      script(src='/js/app.min.js')
