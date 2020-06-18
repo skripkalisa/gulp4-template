@@ -1,6 +1,6 @@
 {
   "name": "gulp-4-template",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Gulp v4 Template",
   "main": "gulpfile.js",
   "scripts": {
@@ -14,7 +14,16 @@
   },
   "keywords": [
     "gulp",
-    "pug"
+    "pug",
+    "sylus",
+    "SASS",
+    "PostCSS",
+    "TypeScript",
+    "CoffeeScript",
+    "ES6+",
+    "Babel",
+    "ImageMin",
+    "Browser-Sync"
   ],
   "author": "skripkalisa",
   "license": "ISC",
