@@ -57,6 +57,7 @@
     "gulp-stylus": "^2.7.0",
     "gulp-terser": "^1.2.0",
     "gulp-typescript": "^6.0.0-alpha.1",
+    "lodash.template": ">=4.5.0",
     "node-sass": "^4.14.1",
     "terser": "^4.7.0",
     "typescript": "^3.9.5"
