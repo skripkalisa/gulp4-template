@@ -1,3 +1,7 @@
+include ./mixins/section
+include ./mixins/article
+-var mainTitle = 'Gulp 4 Template'
+
 <!DOCTYPE html>
 html(lang="en")
   head
@@ -6,7 +10,7 @@ html(lang="en")
     link(href="/css/app.css" rel="stylesheet")
     //link(href="/css/style.css" rel="stylesheet")
     //link(href="/css/sass.css" rel="stylesheet")
-    title Stylus Tutorials
+    title #{mainTitle}
   body
     block header
       include parts/header

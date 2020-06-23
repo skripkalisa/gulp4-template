@@ -1,0 +1,106 @@
+// =====================================================
+// Mixins
+// =====================================================
+rem($pixels, $context = $mainFontSize)
+  if (unitless($pixels))
+    $pixels = $pixels * 1px
+
+  if (unitless($context))
+    $context = $context * 1px
+
+  $pixels / $context * 1rem
+
+// set size with 1 or 2 params
+size($width, $height = $width)
+  width $width
+  height $height
+
+// placeholder mixin
+placeholder()
+  ::-webkit-input-placeholder
+    {block}
+
+  :-moz-placeholder
+    {block}
+
+  ::-moz-placeholder
+    {block}
+
+  :-ms-input-placeholder
+    {block}
+    
+// =====================================================
+// Font Mixins
+// =====================================================
+/*
+    By default template supports only modern font formats:
+    .woff, .woffs
+    For legacy fonts comment out the "Default: Modern fonts" mixin and uncomment the "Modern and legacy fonts" mixin.
+
+    Usage:
+      1. Store your fonts into your fonts directory. By default it is `src/assets/fonts/FOLDERNAME/FONTNAME`
+      2. Edit fonts.styl as needed.
+      3. Utilize the fonts mixin like this: 
+        @include font-face('OpenSans', '../fonts/OpenSans/opensans');
+      Required parameters: @font-family, @file-path
+      Optional parameters: @weight, @style, @asset-pipeline
+      Example simple:
+        @include font-face('OpenSans', '../fonts/OpenSans/opensans');
+      Example with options:
+        @include font-face('OpenSans', '../fonts/OpenSans/opensansItalic', 400, italic);
+  */
+font-face($font-family, $file-path, $weight = normal, $style = normal, $asset-pipeline = false)
+  @font-face
+    font-family $font-family
+    font-weight $weight
+    font-style $style
+    src url('{$file-path}.woff') format('woff'), url('{$file-path}.woff2') format('woff2')
+
+// =====================================================
+// Modern and legacy fonts + .svg
+// Required file format(s): .woff, .woffs, .svg
+// =====================================================
+/*
+@mixin font-face(
+  $font-family,
+  $file-path,
+  $weight: normal,
+  $style: normal,
+  $asset-pipeline: false
+) {
+  @font-face {
+    font-family: $font-family;
+    font-weight: $weight;
+    font-style: $style;
+    src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'),
+      url('#{$file-path}.woff') format('woff'),
+      url('#{$file-path}.woff2') format('woff2'),
+      url('#{$file-path}.svg') format('svg'),
+      url('#{$file-path}.ttf') format('truetype');
+  }
+}
+*/
+// =====================================================
+// Modern and legacy fonts
+// Required file format(s): eot. .woff, .woffs, .svg, .ttf 
+// =====================================================
+/*
+@mixin font-face(
+  $font-family,
+  $file-path,
+  $weight: normal,
+  $style: normal,
+  $asset-pipeline: false
+) {
+  @font-face {
+    font-family: $font-family;
+    font-weight: $weight;
+    font-style: $style;
+    src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'),
+      url('#{$file-path}.woff') format('woff'),
+      url('#{$file-path}.woff2') format('woff2'),
+      url('#{$file-path}.svg') format('svg'),
+      url('#{$file-path}.ttf') format('truetype');
+  }
+} 
+*/

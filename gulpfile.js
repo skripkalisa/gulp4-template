@@ -7,6 +7,7 @@ const { src, dest, watch, series, parallel } = require('gulp'),
   sass = require('gulp-sass'),
   shorthand = require('gulp-shorthand'),
   postcss = require('gulp-postcss'),
+  uncss = require('postcss-uncss'),
   autoprefixer = require('autoprefixer'),
   cssnano = require('cssnano'),
   eslint = require('gulp-eslint'),
@@ -36,7 +37,7 @@ const fontsPath = 'static/fonts/**/*.*'
 const destPath = 'dist'
 
 // styles
-const plugins = [autoprefixer(), cssnano()]
+const plugins = [uncss({html: [`${destPath}/index.html`, `${destPath}/pages/*.html`]}), autoprefixer(), cssnano()]
 function styl() {
   return src(`${stylusPath}/*.styl`)
     .pipe(plumber())
@@ -150,14 +151,15 @@ function fonts() {
 
 // Watch for changes
 function watchSrc() {
-  watch(tsPath, series(ts, scripts, reload))
-  watch(coffeePath, series(coffee, scripts, reload))
-  watch(es6Path, series(es6, scripts, reload))
+  watch(tsPath, ts)
+  watch(coffeePath, coffee)
+  watch(es6Path, es6)
+  watch(jsPath, series(scripts, reload))
   watch(stylusPath, series(styl, reload))
   watch(scssPath, series(scss, reload))
   //watch(cssPath, series(styles, reload)) // Placeholder
-  watch(imgPath, series(images, reload))
-  watch(fontsPath, series(fonts, reload))
+  watch(imgPath, images).on('change', browserSync.reload)
+  watch(fontsPath, fonts).on('change', browserSync.reload)
   watch(pugPath, series(pages, reload))
 }
 function deleteDest() {
@@ -168,6 +170,8 @@ function serve() {
   browserSync.init({
     server: {
       baseDir: destPath,
+      injectChanges: true,
+      reloadDelay: 50
     },
   })
 }

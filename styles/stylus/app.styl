@@ -1,8 +1,11 @@
+@import 'utils/reset'
 @import 'utils/variables'
 @import 'utils/mixins'
-@import 'utils/media'
+@import 'utils/fonts'
 
-header ul>li, footer ul>li
-  text-decoration none
-  display inline-flex
-  margin 0 0.5rem
+html
+  font-family $fontFamily
+  color $fontColor
+  font-size $fontSize
+  font-weight $fontWeight
+  line-height $lineHeight
