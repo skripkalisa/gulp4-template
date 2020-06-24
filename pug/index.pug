@@ -2,8 +2,8 @@ extends layout
 
 block content
   main
-    sidebar 
-      p Sidebar text
+    block sidebar
+      include parts/sidebar
     section 
       h1 Section 1
     section 
@@ -12,3 +12,4 @@ block content
       h1 Section 3
     section
       h1 Section 4
+

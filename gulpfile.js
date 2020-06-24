@@ -7,7 +7,7 @@ const { src, dest, watch, series, parallel } = require('gulp'),
   sass = require('gulp-sass'),
   shorthand = require('gulp-shorthand'),
   postcss = require('gulp-postcss'),
-  uncss = require('postcss-uncss'),
+  purgecss = require('gulp-purgecss'),
   autoprefixer = require('autoprefixer'),
   cssnano = require('cssnano'),
   eslint = require('gulp-eslint'),
@@ -28,23 +28,23 @@ const tsPath = 'scripts/ts'
 const scriptsPath = 'scripts/js'
 const jsPath = 'scripts/js'
 const stylusPath = 'styles/stylus'
-//const cssPath = 'styles/css/**/*.css'
+const cssPath = 'styles/css'
 const scssPath = 'styles/scss'
 const pugPath = 'pug'
 const imgPath = 'static/img/**/*.*'
 const fontsPath = 'static/fonts/**/*.*'
-// const srcPath = '.'
+//const srcPath = './'
 const destPath = 'dist'
 
 // styles
-const plugins = [uncss({html: [`${destPath}/index.html`, `${destPath}/pages/*.html`]}), autoprefixer(), cssnano()]
+const plugins = [autoprefixer(), cssnano()]
 function styl() {
   return src(`${stylusPath}/*.styl`)
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(stylus())
-    .pipe(postcss(plugins))
     .pipe(shorthand())
+    .pipe(postcss(plugins))
     .pipe(sourcemaps.write('maps'))
     .pipe(dest(`${destPath}/css`))
 }
@@ -53,8 +53,23 @@ function scss(done) {
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
-    .pipe(postcss(plugins))
     .pipe(shorthand())
+    .pipe(postcss(plugins))
+    .pipe(sourcemaps.write('maps'))
+    .pipe(dest(`${destPath}/css`))
+  done()
+}
+function cssLibs(done) {
+  src(`${cssPath}/**/*.css`)
+    .pipe(plumber())
+    .pipe(purgecss({
+      content: [`${pugPath}/**/*.pug`]
+  }))
+    .pipe(sourcemaps.init())
+    .pipe(shorthand())
+    .pipe(postcss(plugins))
+    .pipe(concat('libs.css'))
+    .pipe(rename({ extname: '.min.css' }))
     .pipe(sourcemaps.write('maps'))
     .pipe(dest(`${destPath}/css`))
   done()
@@ -109,7 +124,7 @@ function scripts() {
 
 // Pug
 function pages() {
-  return src(`${pugPath}/{index.pug,pages/*.pug}`, { cwdbase: false }) //, { cwdbase: true }) //(`${pugPath}/pages/*.pug}`) // `${pugPath}/index.pug`,
+  return src(`${pugPath}/{index.pug,pages/*.pug}`, { cwdbase: false })
     .pipe(plumber())
     .pipe(
       pug({
@@ -157,7 +172,7 @@ function watchSrc() {
   watch(jsPath, series(scripts, reload))
   watch(stylusPath, series(styl, reload))
   watch(scssPath, series(scss, reload))
-  //watch(cssPath, series(styles, reload)) // Placeholder
+  watch(cssPath, series(cssLibs, reload)) 
   watch(imgPath, images).on('change', browserSync.reload)
   watch(fontsPath, fonts).on('change', browserSync.reload)
   watch(pugPath, series(pages, reload))
@@ -182,11 +197,12 @@ function reload(done) {
 
 // Gulp tasks
 
-// exports.styl = styl
+// exports.styles = parallel(styl, scss)
 // exports.pages = pages
 // exports.jss = scripts
+// exports.css = series(exports.styles,cssLibs)
 exports.jsPlus = parallel(es6, coffee, ts)
 exports.js = series(exports.jsPlus, scripts)
-exports.build = parallel(exports.js, styl, scss, pages, images, fonts)
+exports.build = parallel(exports.js, styl, scss, cssLibs, pages, images, fonts)
 exports.watch = parallel(serve, watchSrc)
 exports.default = series(deleteDest, exports.build, exports.watch)
