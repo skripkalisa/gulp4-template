@@ -11,23 +11,23 @@
     "eslint:recommended"
   ],
   "parserOptions": {
-    "ecmaVersion": 2015,
+    "ecmaVersion": 2020,
     "sourceType": "module"
   },
   "rules": {
     "no-console": 0,
-    // "indent": [
-    //   2,
-    //   2
-    // ],
-    "quotes": [
-      2,
-      "single"
-    ],
-    "semi": [
-      2,
-      "never"
-    ]
+    "strict": "off",
+    "indent": [2, 2, {
+      "VariableDeclarator": {
+        "var": 2,
+        "let": 2,
+        "const": 3
+      }
+    }],
+    "quotes": ["error", "single", {
+      "allowTemplateLiterals": true
+    }],
+    "semi": ["error", "never"]
   },
   "globals": {
     "document": false

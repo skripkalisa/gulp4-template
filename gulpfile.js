@@ -1,24 +1,24 @@
 const { src, dest, watch, series, parallel } = require('gulp'),
-  plumber = require('gulp-plumber'),
-  sourcemaps = require('gulp-sourcemaps'),
-  rename = require('gulp-rename'),
-  del = require('del'),
-  stylus = require('gulp-stylus'),
-  sass = require('gulp-sass'),
-  shorthand = require('gulp-shorthand'),
-  postcss = require('gulp-postcss'),
-  purgecss = require('gulp-purgecss'),
-  autoprefixer = require('autoprefixer'),
-  cssnano = require('cssnano'),
-  eslint = require('gulp-eslint'),
-  babel = require('gulp-babel'),
-  terser = require('gulp-terser'),
-  cscript = require('gulp-coffee'),
-  tscript = require('gulp-typescript'),
-  concat = require('gulp-concat'),
-  pug = require('gulp-pug'),
-  imagemin = require('gulp-imagemin'),
-  browserSync = require('browser-sync').create()
+      plumber = require('gulp-plumber'),
+      sourcemaps = require('gulp-sourcemaps'),
+      rename = require('gulp-rename'),
+      del = require('del'),
+      stylus = require('gulp-stylus'),
+      sass = require('gulp-sass'),
+      shorthand = require('gulp-shorthand'),
+      postcss = require('gulp-postcss'),
+      purgecss = require('gulp-purgecss'),
+      autoprefixer = require('autoprefixer'),
+      cssnano = require('cssnano'),
+      eslint = require('gulp-eslint'),
+      babel = require('gulp-babel'),
+      terser = require('gulp-terser'),
+      cscript = require('gulp-coffee'),
+      tscript = require('gulp-typescript'),
+      concat = require('gulp-concat'),
+      pug = require('gulp-pug'),
+      imagemin = require('gulp-imagemin'),
+      browserSync = require('browser-sync').create()
 //reload = browserSync.reload // buggy! Function below fixes this.
 
 // Paths
@@ -62,9 +62,11 @@ function scss(done) {
 function cssLibs(done) {
   src(`${cssPath}/**/*.css`)
     .pipe(plumber())
-    .pipe(purgecss({
-      content: [`${pugPath}/**/*.pug`]
-  }))
+    .pipe(
+      purgecss({
+        content: [`${pugPath}/**/*.pug`],
+      })
+    )
     .pipe(sourcemaps.init())
     .pipe(shorthand())
     .pipe(postcss(plugins))
@@ -172,7 +174,7 @@ function watchSrc() {
   watch(jsPath, series(scripts, reload))
   watch(stylusPath, series(styl, reload))
   watch(scssPath, series(scss, reload))
-  watch(cssPath, series(cssLibs, reload)) 
+  watch(cssPath, series(cssLibs, reload))
   watch(imgPath, images).on('change', browserSync.reload)
   watch(fontsPath, fonts).on('change', browserSync.reload)
   watch(pugPath, series(pages, reload))
@@ -186,7 +188,7 @@ function serve() {
     server: {
       baseDir: destPath,
       injectChanges: true,
-      reloadDelay: 50
+      reloadDelay: 50,
     },
   })
 }
