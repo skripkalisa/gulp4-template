@@ -1,0 +1,23 @@
+nav.navbar
+  a.navbar-brand(href='#') Brand
+  button.navbar-toggler(type='button', data-toggle='collapse', data-target='#topMenu', aria-controls='topMenu', aria-expanded='false', aria-label='Toggle navigation')
+    span.navbar-toggler-icon
+    //- #topMenu.collapse.navbar-collapse
+    .container
+      //- #activeMenu(style='left: -100%; width: 0px;')
+      ul.navbar-nav
+        li.nav-item
+          a#active_menu.mainlevel(href='/') Home 
+        li.nav-item
+          a.mainlevel(href='/pages/about.html') About
+        //- li.nav-item
+        //-   a.mainlevel(href='#') Link 2
+        //- li.nav-item
+        //-   a.mainlevel(href='#') Link 3
+        //- li.nav-item
+        //-   a.mainlevel(href='#') Link 4
+        //- li.nav-item
+        //-   a.mainlevel(href='#') Link 5
+        li.nav-item
+          a.mainlevel.lastMenuItem(href='#contact') Контакты
+

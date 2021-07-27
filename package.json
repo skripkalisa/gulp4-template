@@ -1,6 +1,6 @@
 {
   "name": "gulp-4-template",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "Gulp v4 Template",
   "main": "gulpfile.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/skripkalisa/gulp4-template"
+    "url": "git+https://github.com/skripkalisa/gulp4-template.git"
   },
   "keywords": [
     "gulp",
@@ -27,20 +27,22 @@
   ],
   "author": "skripkalisa",
   "license": "ISC",
-  "dependencies": {},
+  "bugs": {
+    "url": "https://github.com/skripkalisa/gulp4-template/issues"
+  },
+  "homepage": "https://github.com/skripkalisa/gulp4-template#readme",
   "devDependencies": {
-    "@babel/core": "^7.10.2",
-    "@babel/preset-env": "^7.10.2",
-    "autoprefixer": "^9.8.0",
-    "browser-sync": "^2.26.7",
-    "cssnano": "^4.1.10",
-    "del": "^5.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-node": "^11.0.0",
+    "@babel/core": "^7.14.8",
+    "@babel/preset-env": "^7.14.8",
+    "autoprefixer": "^10.3.1",
+    "browser-sync": "^2.27.5",
+    "cssnano": "^5.0.7",
+    "del": "^6.0.0",
+    "eslint": "^7.31.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4",
     "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
+    "gulp-autoprefixer": "^8.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-coffee": "^3.0.3",
     "gulp-concat": "^2.6.1",
@@ -48,19 +50,22 @@
     "gulp-eslint": "^6.0.0",
     "gulp-imagemin": "^7.1.0",
     "gulp-plumber": "^1.2.1",
-    "gulp-postcss": "^8.0.0",
-    "gulp-pug": "^4.0.1",
-    "gulp-purgecss": "^2.3.0",
+    "gulp-postcss": "^9.0.0",
+    "gulp-pug": "^5.0.0",
+    "gulp-purgecss": "^4.0.3",
     "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.1.0",
+    "gulp-sass": "^5.0.0",
     "gulp-shorthand": "^1.1.0",
-    "gulp-sourcemaps": "^2.6.5",
+    "gulp-sourcemaps": "^3.0.0",
     "gulp-stylus": "^2.7.0",
-    "gulp-terser": "^1.2.0",
+    "gulp-terser": "^2.0.1",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "lodash.template": ">=4.5.0",
-    "node-sass": "^4.14.1",
-    "terser": "^4.7.0",
-    "typescript": "^3.9.5"
+    "js-yaml": "^4.1.0",
+    "postcss": "^8.3.6",
+    "pug": "^3.0.2",
+    "sass": "^1.36.0",
+    "terser": "^5.7.1",
+    "trim-newlines": "^4.0.2",
+    "typescript": "^4.3.5"
   }
 }

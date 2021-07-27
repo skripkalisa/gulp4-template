@@ -4,7 +4,7 @@ const { src, dest, watch, series, parallel } = require('gulp'),
       rename = require('gulp-rename'),
       del = require('del'),
       stylus = require('gulp-stylus'),
-      sass = require('gulp-sass'),
+      sass = require('gulp-sass')(require('sass')),
       shorthand = require('gulp-shorthand'),
       postcss = require('gulp-postcss'),
       purgecss = require('gulp-purgecss'),
@@ -38,6 +38,7 @@ const destPath = 'dist'
 
 // styles
 const plugins = [autoprefixer(), cssnano()]
+
 function styl() {
   return src(`${stylusPath}/*.styl`)
     .pipe(plumber())
@@ -48,6 +49,7 @@ function styl() {
     .pipe(sourcemaps.write('maps'))
     .pipe(dest(`${destPath}/css`))
 }
+
 function scss(done) {
   src(`${scssPath}/{*.scss,*.sass}`)
     .pipe(plumber())
@@ -59,6 +61,7 @@ function scss(done) {
     .pipe(dest(`${destPath}/css`))
   done()
 }
+
 function cssLibs(done) {
   src(`${cssPath}/**/*.css`)
     .pipe(plumber())
@@ -71,7 +74,11 @@ function cssLibs(done) {
     .pipe(shorthand())
     .pipe(postcss(plugins))
     .pipe(concat('libs.css'))
-    .pipe(rename({ extname: '.min.css' }))
+    .pipe(
+      rename({
+        extname: '.min.css',
+      })
+    )
     .pipe(sourcemaps.write('maps'))
     .pipe(dest(`${destPath}/css`))
   done()
@@ -91,11 +98,17 @@ function es6(done) {
     .pipe(dest(jsPath))
   done()
 }
+
 function coffee() {
   return src(`${coffeePath}/*.coffee`)
     .pipe(plumber())
-    .pipe(cscript({ bare: false }))
+    .pipe(
+      cscript({
+        bare: false,
+      })
+    )
 }
+
 function ts() {
   return src(`${tsPath}/*.ts`)
     .pipe(plumber())
@@ -108,6 +121,7 @@ function ts() {
     )
     .pipe(dest(jsPath))
 }
+
 function scripts() {
   return src(`${scriptsPath}/*.js`)
     .pipe(plumber())
@@ -119,14 +133,20 @@ function scripts() {
     )
     .pipe(terser())
     .pipe(concat('app.js'))
-    .pipe(rename({ extname: '.min.js' }))
+    .pipe(
+      rename({
+        extname: '.min.js',
+      })
+    )
     .pipe(sourcemaps.write('maps'))
     .pipe(dest(`${destPath}/js`))
 }
 
 // Pug
 function pages() {
-  return src(`${pugPath}/{index.pug,pages/*.pug}`, { cwdbase: false })
+  return src(`${pugPath}/{index.pug,pages/*.pug}`, {
+    cwdbase: false,
+  })
     .pipe(plumber())
     .pipe(
       pug({
@@ -147,20 +167,52 @@ function images() {
   return src(imgPath)
     .pipe(
       imagemin([
-        //imagemin.gifsicle({ interlaced: true }), - out of order
+        // imagemin.gifsicle({ interlaced: true }), //- out of order
         imagemin.mozjpeg({
           quality: 75,
           progressive: true,
         }),
-        imagemin.optipng({ optimizationLevel: 5 }),
+        imagemin.optipng({
+          optimizationLevel: 5,
+        }),
         imagemin.svgo({
-          plugins: [{ removeViewBox: true }, { cleanupIDs: false }],
+          plugins: [{
+            removeViewBox: true,
+          },
+          {
+            cleanupIDs: false,
+          },
+          ],
         }),
       ])
     )
     .pipe(dest(`${destPath}/img`))
 }
 
+function favicon() {
+  return src(`static/img/icon/favicon.ico`).pipe(
+    imagemin([
+      // imagemin.gifsicle({ interlaced: true }),// - out of order
+      imagemin.mozjpeg({
+        quality: 75,
+        progressive: true,
+      }),
+      imagemin.optipng({
+        optimizationLevel: 5,
+      }),
+      imagemin.svgo({
+        plugins: [{
+          removeViewBox: true,
+        },
+        {
+          cleanupIDs: false,
+        },
+        ],
+      }),
+    ])
+  )
+    .pipe(dest(`${destPath}/`))
+}
 // fonts
 function fonts() {
   return src(fontsPath).pipe(dest(`${destPath}/fonts`))
@@ -175,10 +227,11 @@ function watchSrc() {
   watch(stylusPath, series(styl, reload))
   watch(scssPath, series(scss, reload))
   watch(cssPath, series(cssLibs, reload))
-  watch(imgPath, images).on('change', browserSync.reload)
+  watch(imgPath, images, favicon).on('change', browserSync.reload)
   watch(fontsPath, fonts).on('change', browserSync.reload)
   watch(pugPath, series(pages, reload))
 }
+
 function deleteDest() {
   return del(destPath)
 }
@@ -192,6 +245,7 @@ function serve() {
     },
   })
 }
+
 function reload(done) {
   browserSync.reload()
   done()
@@ -205,6 +259,6 @@ function reload(done) {
 // exports.css = series(exports.styles,cssLibs)
 exports.jsPlus = parallel(es6, coffee, ts)
 exports.js = series(exports.jsPlus, scripts)
-exports.build = parallel(exports.js, styl, scss, cssLibs, pages, images, fonts)
+exports.build = parallel(exports.js, styl, scss, cssLibs, pages, images, favicon, fonts)
 exports.watch = parallel(serve, watchSrc)
 exports.default = series(deleteDest, exports.build, exports.watch)

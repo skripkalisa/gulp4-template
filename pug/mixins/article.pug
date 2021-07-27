@@ -1,0 +1,15 @@
+mixin article(title, subtitle, author, summary, text)
+  .article
+    .article-heading
+      h2=title
+      h3=subtitle
+      span
+        strong
+          em=author
+      details
+        if summary
+          summary=summary
+        if text
+          p=text
+        if block
+          block

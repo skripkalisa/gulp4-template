@@ -1,0 +1,39 @@
+block head
+  title #{siteName} | #{pageTitle}
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width,initial-scale=1')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  meta(name='description', content= siteDescription)
+  meta(name='description', content= pageDescription)
+  meta(name='author', content= author)
+  meta(name='robots', content= robots)
+  meta(name='description', content= siteKeywords)
+  meta(name='description', content= pageKeywords)
+  meta(property='og:url', content= pageUrl)
+  meta(property='og:title', content= siteName + ' | ' + pageTitle)
+  meta(property='og:description', content= description)
+  meta(property='og:image', content= imgUrl)
+  meta(property='og:locale', content= locale)
+
+  link(rel='icon' type='image/png' href='/img/icon/favicon-16x16.png' sizes='16x16')
+  link(rel='icon' type='image/png' href='/img/icon/favicon-32x32.png' sizes='32x32')
+  link(rel='icon' type='image/png' href='/img/icon/favicon-96x96.png' sizes='96x96')
+
+  //- link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.0.1/pulse/bootstrap.min.css')
+  //- link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.0.1/spacelab/bootstrap.min.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+
+  style.
+    @import url('https://fonts.googleapis.com/css?family=El+Messiri|Gabriela|Roboto+Condensed&subset=cyrillic-ext');
+
+  //- Styles
+  //- link(href='/css/libs.min.css' rel='stylesheet')
+  //- link(href='/css/sass.css' rel='stylesheet')
+  //- link(href='/css/scss.css' rel='stylesheet')
+  link(href='/css/app.css', rel='stylesheet')
+
+  block scripts
+    //- script(async='async' src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js')
+    //- script(async='async' src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js'  )
+    script(defer='defer' src='/js/app.min.js')
+

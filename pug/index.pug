@@ -1,15 +1,12 @@
-extends layout
+extends layout/layout
+
+block vars
+  - var pageTitle='Main Page'
+  - var pageDescription = 'main page'
+  - var pageKeywords = 'main page, template'
+  //- - var pageUrl = 'https://full-link-to-your.page' //- when needed
+  //- - var imgUrl = 'link/to/img.type' //- when needed
+  //- - var locale = 'ru' //- when needed
 
 block content
-  main
-    block sidebar
-      include parts/sidebar
-    section 
-      h1 Section 1
-    section 
-      h1 Section 2
-    section 
-      h1 Section 3
-    section
-      h1 Section 4
-
+  include layout/main

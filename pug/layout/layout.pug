@@ -1,0 +1,34 @@
+include ../mixins/aboutCard
+include ../mixins/iconCard
+include ../mixins/article
+
+- var siteName = 'Template'
+- var siteDescription = 'site template'
+- var siteKeywords = 'website, template'
+- var author = 'skripkalisa'
+- var robots = 'all'
+- var pageUrl = 'https://full-link-to-your.site'
+- var imgUrl = 'link/to/img.type'
+- var locale = 'ru'
+
+- var since = '1970'
+- var instagram = 'your-group-name'
+- var facebook = 'your-group-name'
+- var vk = 'your-group-name'
+- var ytChannel = 'yt-channel-name'
+- var linkedIn = 'your-link'
+
+block vars
+
+
+doctype html
+html(lang= locale)
+  head
+    block head
+      include parts/head
+  body
+    block header
+      include header
+    block content
+    block footer
+      include footer

@@ -1,0 +1,13 @@
+mixin aboutCard(imgSrc, title, desc, ilink1, ilink2, ilink3)
+  .card-about
+    img(src=imgSrc)
+    .text-about
+      h4=title
+      p=desc
+      .iconLinks
+        a(href=ilink1, target="_blanc")
+          i.icofont-whatsapp
+        a(href=ilink2, target="_blanc")
+          i.icofont-instagram
+        a(href=ilink3, target="_blanc")
+          i.icofont-facebook
